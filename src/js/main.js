@@ -1,56 +1,99 @@
-// import { helloWorld } from './index.js';
 import '../css/styles.css';
 import '../css/sketchyBootstrap.min.css';
 
-
-
-
+//1
 // $(document).ready(function() {
-//   $('#greeting').submit(function(event) {
-//     event.preventDefault();
-//     var name = $('#name').val();
-//     $('#display').append("<li>" + helloWorld(name) + "</li>");
+//   $('#weatherLocation').click(function() {
+//     let city = $('#location').val();
+//     $('#location').val("");
+//
+//     let promise = new Promise(function(resolve, reject) {
+//       let request = new XMLHttpRequest();
+//       let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.API_KEY}`;
+//       request.onload = function() {
+//         if (this.status === 200) {
+//           resolve(request.response);
+//         } else {
+//           reject(Error(request.statusText));
+//         }
+//       };
+//       request.open("GET", url, true);
+//       request.send();
+//     });
+//
+//     promise.then(function(response) {
+//       let body = JSON.parse(response);
+//       $('.showHumidity').text(`The humidity in ${city} is ${body.main.humidity}%`);
+//       $('.showTemp').text(`The temperature in Kelvins is ${body.main.temp} degrees.`);
+//     }, function(error) {
+//       $('.showErrors').text(`There was an error processing your request: ${error.message}`);
+//     });
 //   });
 // });
 
+//2
+// $(document).ready(function() {
+//   $('#weatherLocation').click(function() {
+//     const city = $('#location').val();
+//     $('#location').val("");
+//
+//     fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.API_KEY}`)
+//       .then(function(response) {
+//         return response.json();
+//       })
+//       .then(function(jsonifiedResponse) {
+//         getElements(jsonifiedResponse);
+//       });
+//
+//     const getElements = function(response) {
+//       $('.showHumidity').text(`The humidity in ${city} is ${response.main.humidity}%`);
+//       $('.showTemp').text(`The temperature in Kelvins is ${response.main.temp} degrees.`);
+//     };
+//   });
+// });
+
+//3
+// async function asyncApiCall(city) {
+//   let response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.API_KEY}`);
+//   let jsonifiedResponse = await response.json();
+//   getElements(jsonifiedResponse);
+// }
+//
+// const getElements = function(response) {
+//   $('.showHumidity').text(`The humidity in ${response.name} is ${response.main.humidity}%`);
+//   $('.showTemp').text(`The temperature in Kelvins is ${response.main.temp} degrees.`);
+// };
+//
+// $(document).ready(function() {
+//   $('#weatherLocation').click(function() {
+//     const city = $('#location').val();
+//     $('#location').val("");
+//
+//     asyncApiCall(city);
+//
+//
+//   });
+// });
+
+//4 separation of logic
+import { WeatherService } from './weather-service.js';
 
 $(document).ready(function() {
+
   $('#weatherLocation').click(function() {
     const city = $('#location').val();
     $('#location').val("");
 
-    let request = new XMLHttpRequest();
-    const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.API_KEY}`;
+    (async () => {
+      let weatherService = new WeatherService();
+      const response = await weatherService.getWeatherByCity(city);
+      getElements(response);
+    })();
 
-    request.onreadystatechange = function() {
-
-      console.log("event listner firing");
-
-      if (this.readyState === 0) {
-        console.log("0: not sent yet");
-      }
-      else if (this.readyState === 1) {
-        console.log("1: open() has been called");
-      }
-      else if (this.readyState === 2) {
-        console.log("2: send() has been called, and headers and status are available");
-      }
-      else if (this.readyState === 3) {
-        console.log("3: downloading; responseText holds partial data");
-      }
-      else if (this.readyState === 4 && this.status === 200) {
-        console.log("4: operation complete");
-        const response = JSON.parse(this.responseText);
-        getElements(response);
-      }
-    };
-
-    request.open("GET", url, true);
-    request.send();
-
-    const getElements = function(response) {
+    function getElements(response) {
       $('.showHumidity').text(`The humidity in ${city} is ${response.main.humidity}%`);
       $('.showTemp').text(`The temperature in Kelvins is ${response.main.temp} degrees.`);
-    };
+    }
+
   });
 });
