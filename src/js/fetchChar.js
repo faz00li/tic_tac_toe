@@ -1,7 +1,8 @@
-export class WeatherService {
-  async getWeatherByCity(city) {
+export class fetchChar {
+  async fetchChar(charId) {
+
     try {
-      let response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.API_KEY}`);
+      let response = await fetch(`https://api.jikan.moe/v3/character/${charId}/pictures`);
       let jsonifiedResponse = await response.json();
       return jsonifiedResponse;
     } catch(error) {
