@@ -7,7 +7,7 @@ export class Character {
 
   async fetchChar() {
     try {
-      let response = await fetch(`https://api.jikan.moe/v3/character/${this.charId}/pictures`);
+      let response = await fetch(`https://api.jikan.moe/v3/character/${this.getId()}/pictures`);
       let jsonifiedResponse = await response.json();
       this.pictures = jsonifiedResponse.pictures;
     } catch(error) {
@@ -22,9 +22,12 @@ export class Character {
   getPictures() {
     return this.pictures;
   }
+  getPic(picIndex) {
+    return this.pictures[picIndex];
+  }
 
-  displayPictures() {
-    console.log("???????????????");
+  printPictures() {
+    console.log("***PRINT PICTURES***");
     this.pictures.forEach(function(picture) {
       console.log(picture.large);
     });

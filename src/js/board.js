@@ -3,14 +3,30 @@
 import { Card } from './card.js';
 import { Character } from './character.js';
 
+
 export class Board {
 
   constructor() {
     this.chars = [];
     this.deck = [];
-    this.turns = 0;
+    this.turns = 2;
     this.gameEnd = 6;
     this.numMatches = 0;
+    this.numClicks = 0;
+  }
+
+  addClick() {
+    this.numClicks++;
+  }
+  resetClicks() {
+    this.numClicks = 0;
+  }
+  getClicks() {
+    return this.numClicks;
+  }
+
+  getTurns() {
+    return this.turns;
   }
 
   getCharacters() {
@@ -31,7 +47,7 @@ export class Board {
     var cardIndex = 0;
     for (var charIndex = 0; charIndex < 3; charIndex++) {
       for (var picIndex = 0; picIndex < 2; picIndex++) {
-        var picURL = this.chars[charIndex].pictures[picIndex].large;
+        var picURL = this.chars[charIndex].getPic(picIndex).large;
         var card = new Card(cardIndex, picURL);
         for (var i = 0; i < 2; i++) {
           this.deck.push(card);
@@ -50,15 +66,16 @@ export class Board {
       this.deck[i] = temp;
     }
   }
-
   printDeck() {
     this.deck.forEach(function(card) {
       console.log(`cardId: ${card.getId()} URL: ${card.getPic()}`);
     });
   }
-
-  getCards() {
+  getDeck() {
     return this.deck;
+  }
+  getCard(index) {
+    return this.deck[index];
   }
 
 
