@@ -1,93 +1,74 @@
-import '../css/styles.css';
+
+
+
 import '../css/sketchyBootstrap.min.css';
+import '../css/styles.css';
 
-import { Board } from './board.js';
-// import { Card } from './card.js';
-// import { Character } from './character.js';
+import { Game } from './game.js';
+// ***** USER INTERFACE LOGIC *****
 
-function populate(board) {
-  var i = 0, selector = "", html = "";
-  board.deck.forEach(function(card){
-    selector = `#${i}`;
-    // console.log(selector);
-    html = `<div class="front cardId${card.getId()}"><img  src="${card.getPic()}"></div>`;
-    $(selector).prepend(html);
-    i++;
-  });
-}
 
-function flip(selectorFront, selectorBack) {
-  $(selectorFront).show();
-  $(selectorBack).hide();
-}
 
-function updateClicks(board) {
-  board.addClick();
-}
 
-function endTurn(board) {
-  if (board.getClicks() == board.getTurns()) {
-    board.resetClicks();
-    $(".front").hide();
-    $(".back").show();
+// console.log("ONCLICK -- " + "player: " + t.whoseTurn + " clicked on: " + squareId + " game over: " + t.gameOver + " turnCounter: " + t.turnCounter + " square is marked: " + t.checkIfMarked(squareId) );
+
+function getId(event) {
+  // let div = document.getElementById('card');
+  let target = event.target;
+
+  console.log(target.tagName);
+
+  while (target.tagName != "DIV") {
+    target = target.parentNode;
   }
-
+  markSquare(target);
 }
 
 
-var b = new Board();
 
-b.getCharacters();
+function markSquare(element){
+  // console.log(`here ${event.attributes.getNamedItem("class").value}`);
+  // console.log(`here ${event}`);
+  //
+  // console.log(event);
 
 
 
-$('#getPics').click(function() {
-  b.createDeck();
+  var squareId = element.attributes.getNamedItem("id").value;
 
-});
+  console.log("square IDDDD: " + squareId);
+  var squareIdInterface = "#" + squareId;
 
-$('#getCards').click(function() {
-  populate(b);
-});
+  if(t.checkIfMarked(squareId) == false) {
+
+    if(t.whoseTurn === 0) {
+      $(squareIdInterface + " h1.markerO").remove();
+      $(squareIdInterface + " h1.markerX").show();
+      t.takeTurn(squareId);
+    }
+
+    else if(t.whoseTurn === 1) {
+      $(squareIdInterface + " h1.markerX").remove();
+      $(squareIdInterface + " h1.markerO").show();
+      t.takeTurn(squareId);
+    }
+
+  }
+  else
+    console.log("square taken, choose another");
+
+  if (t.checkGameOver()) {
+    alert("game over");
+  }
+}
+
+
+
+var t = new Game();
+t.setGame();
 
 $(document).ready(function() {
 
-  $('.col-sm').click(function(event){
-    var card = event.target.id;
-    var selectorFront = `#${card} > .front`;
-    var selectorBack = `#${card} > .back`;
+  $(".square").click(getId);//click
 
-    flip(selectorFront, selectorBack);
-    updateClicks(b);
-    endTurn(b);
-
-
-
-
-    //
-    // console.log("origninal numClicks: " + numberOfClicks);
-    // console.log("cardId: " + card);
-    // console.log("click --> front selector: " + selectorFront);
-    // console.log("click --> back selector: " + selectorBack);
-
-
-
-
-  });
-
-
-
-
-  // $('.front').click(function(event) {
-  // //   var card =
-  // });
-
-});
-
-
-//     //populate(b.createBoard());
-//
-//     //attach event handlers to cells
-//
-//     //until numMatches === 0 take turns
-//
+});//ready

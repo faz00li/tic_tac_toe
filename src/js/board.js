@@ -1,90 +1,59 @@
 
 
-import { Card } from './card.js';
-import { Character } from './character.js';
-
+// ***** BOARD *****
 
 export class Board {
 
   constructor() {
-    this.chars = [];
-    this.deck = [];
-    this.turns = 2;
-    this.gameEnd = 6;
-    this.numMatches = 0;
-    this.numClicks = 0;
+    this.board = new Array(9),
+    this.winConditions = new Array(8);
   }
 
-  addClick() {
-    this.numClicks++;
-  }
-  resetClicks() {
-    this.numClicks = 0;
-  }
-  getClicks() {
-    return this.numClicks;
-  }
+  updateWinConditions() {
+    // rows
+    var w0 = this.board[0] + this.board[1] + this.board[2];
+    var w1 = this.board[3] + this.board[4] + this.board[5];
+    var w2 = this.board[6] + this.board[7] + this.board[8];
 
-  getTurns() {
-    return this.turns;
-  }
+    // columns
+    var w3 = this.board[0] + this.board[3] + this.board[6];
+    var w4 = this.board[1] + this.board[4] + this.board[7];
+    var w5 = this.board[2] + this.board[5] + this.board[8];
 
-  getCharacters() {
-    for (var charIndex = 0; charIndex < 3; charIndex++) {
-      var c = new Character(charIndex + 1);
-      c.fetchChar();
-      this.chars.push(c);
+    // diag
+    var w6 = this.board[0] + this.board[4] + this.board[8];
+    var w7 = this.board[2] + this.board[4] + this.board[6];
+
+    this.winConditions = [w0, w1 ,w2, w3, w4, w5, w6, w7];
+  }
+  checkWinConditions(whoseTurn) {
+    var winCheck = (whoseTurn + 1) * 3;
+    this.updateWinConditions();
+
+    for(var i = 0; i < this.winConditions.length; i++) {
+      if ( this.winConditions[i] === (winCheck) )
+        return true;
     }
+    return false;
   }
-  printCharacters() {
-    console.log("***printCharacters***");
-    this.chars.forEach(function(char) {
-      char.printPictures();
-    });
+  markSquare(squareId, whoseTurn) {
+    this.board[squareId] = whoseTurn + 1;
   }
-
-  createDeck() {
-    var cardIndex = 0;
-    for (var charIndex = 0; charIndex < 3; charIndex++) {
-      for (var picIndex = 0; picIndex < 2; picIndex++) {
-        var picURL = this.chars[charIndex].getPic(picIndex).large;
-        var card = new Card(cardIndex, picURL);
-        for (var i = 0; i < 2; i++) {
-          this.deck.push(card);
-        }
-        cardIndex++;
-      }
-    }
-    this.shuffleDeck();
+  printBoard() {
+    var boardContent = "";
+    for(var i = 0; i < this.board.length; i++)
+      boardContent += i +":" + "(" + this.board[i]+ ") ";
+    console.log(boardContent);
   }
-  shuffleDeck() {
-    var i = this.deck.length, r = 0, temp = 0;
-    while (--i > 0) {
-      r = Math.floor(Math.random() * (i + 1));
-      temp = this.deck[r];
-      this.deck[r] = this.deck[i];
-      this.deck[i] = temp;
-    }
+  printWinConditions() {
+    var winConditionsContent = "";
+    for(var i = 0; i < this.winConditions.length; i++)
+      winConditionsContent += i +":" + "(" + this.winConditions[i]+ ") ";
+    console.log(winConditionsContent);
   }
-  printDeck() {
-    this.deck.forEach(function(card) {
-      console.log(`cardId: ${card.getId()} URL: ${card.getPic()}`);
-    });
+  clearBoard() {
+    for(var i = 0; i < this.board.length; i++)
+      this.board[i] = -100;
   }
-  getDeck() {
-    return this.deck;
-  }
-  getCard(index) {
-    return this.deck[index];
-  }
-
-
-
-
-  //takeTurn()
-
-  //match()
-
-
 
 }

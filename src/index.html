@@ -3,75 +3,80 @@
 
   <head>
     <script src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-    <title>Cowboy Bepbop Flash Card Game</title>
+    <title>Tic Tac Toe</title>
   </head>
 
-  <body class="bg-dark">
-
+  <body>
     <div class="container mt-3">
 
-      <div class="jumbotron bg-warning">
-        <h1 class=" display-4 fontweight-bold text-center">Cowboy Bepbop Memory Match Game</h1>
-      </div>
+        <div class="jumbotron bg-info">
+          <div class="container bg-light border border-dark">
 
-      <button class="btn-success btn-lg" id="getPics">Setup Game!</button>
+            <h1>Tic Tac Toe</h1>
+            <div class="row">
+              <div class="col-md-6">
+                <h2 class="p1">Player 1 Turn</h2>
+              </div>
+              <div class="col-md-6">
+                <h2 class="p2">Player 2 Turn</h2>
+              </div>
+            </div>
 
-      <button class="btn-success btn-lg" id="getCards">setupcards!</button>
+          </div>
+          <span class="text-right align-baseline">by faz00li</span>
+        </div>
 
-      <ul id="display"></ul>
 
-      <div class="container">
+      <div id="gameBoard">
+
         <div class="row">
-          <div class="col-sm m-1 bg-warning" id="0">
-            <div class="back">?</div>
+          <div class="card square col-md m-3 bg-info" id="0">
+            <h1 class="markerX card-text text-primary text-center align-middle">X</h1>
+            <h1 class="markerO card-text text-primary text-center align-middle">O</h1>
           </div>
-          <div class="col-sm m-1 bg-warning" id="1">
-            <div class="back">?</div>
+          <div class="card square col-md m-3 bg-info" id="1">
+            <h1 class="markerX card-text text-primary text-center align-middle">X</h1>
+            <h1 class="markerO card-text text-primary text-center align-middle">O</h1>
           </div>
-          <div class="col-sm m-1 bg-warning" id="2">
-            <div class="back">?</div>
-          </div>
-          <div class="col-sm m-1 bg-warning" id="3">
-            <div class="back">?</div>
+          <div class="card square col-md m-3 bg-info" id="2">
+            <h1 class="markerX card-text text-primary text-center align-middle">X</h1>
+            <h1 class="markerO card-text text-primary text-center align-middle">O</h1>
           </div>
         </div>
 
         <div class="row">
-          <div class="col-sm m-1 bg-warning" id="4">
-            <div class="back">?</div>
+          <div class="card square col-md m-3 bg-info" id="3">
+            <h1 class="markerX card-text text-primary text-center align-middle">X</h1>
+            <h1 class="markerO card-text text-primary text-center align-middle">O</h1>
           </div>
-          <div class="col-sm m-1 bg-warning" id="5">
-            <div class="back">?</div>
+          <div class="card square col-md m-3 bg-info" id="4">
+            <h1 class="markerX card-text text-primary text-center align-middle">X</h1>
+            <h1 class="markerO card-text text-primary text-center align-middle">O</h1>
           </div>
-          <div class="col-sm m-1 bg-warning" id="6">
-            <div class="back">?</div>
-          </div>
-          <div class="col-sm m-1 bg-warning" id="7">
-            <div class="back">?</div>
+          <div class="card square col-md m-3 bg-info" id="5">
+            <h1 class="markerX card-text text-primary text-center align-middle">X</h1>
+            <h1 class="markerO card-text text-primary text-center align-middle">O</h1>
           </div>
         </div>
 
         <div class="row">
-          <div class="col-sm m-1 bg-warning" id="8">
-            <div class="back">?</div>
+          <div class="card square col-md m-3 bg-info" id="6">
+            <h1 class="markerX card-text text-primary text-center align-middle">X</h1>
+            <h1 class="markerO card-text text-primary text-center align-middle">O</h1>
           </div>
-          <div class="col-sm m-1 bg-warning" id="9">
-            <div class="back">?</div>
+          <div class="card square col-md m-3 bg-info" id="7">
+            <h1 class="markerX card-text text-primary text-center align-middle">X</h1>
+            <h1 class="markerO card-text text-primary text-center align-middle">O</h1>
           </div>
-          <div class="col-sm m-1 bg-warning" id="10">
-            <div class="back">?</div>
-          </div>
-          <div class="col-sm m-1 bg-warning" id="11">
-            <div class="back">?</div>
+          <div class="card square col-md m-3 bg-info" id="8">
+            <h1 class="markerX card-text text-primary text-center align-middle">X</h1>
+            <h1 class="markerO card-text text-primary text-center align-middle">O</h1>
           </div>
         </div>
 
-      </div>
+      </div> <!--gameBoard -->
 
-
-
-    </div>
+    </div> <!-- container -->
 
   </body>
-
 </html>
